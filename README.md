@@ -109,6 +109,21 @@ In the case of an ankan, the dora event comes first, followed by the tsumo event
 
 The procedures executed by Simulator can be checked and debugged one by one as follows:
 
+```powershell
+# launch
+$CONTAINER_ID=$(docker run -d --rm -p 28080:3000 --mount "type=bind,src=C:\Users\Owner\work\private\mahjong\mjai.app\examples\rulebase.zip,dst=/bot.zip,readonly" smly/mjai-client:v3 sleep infinity)
+CONTAINER_ID=`docker run -d --rm -p 28080:3000 --mount "type=bind,src=/Users/smly/gitws/mjai.app/examples/rulebase.zip,dst=/bot.zip,readonly" smly/mjai-client:v3 sleep infinity`
+
+# ファイルの解凍
+docker exec $CONTAINER_ID unzip -q /bot.zip
+
+# ファイルのコピー
+docker cp .\python\mjaisimulator\http_server\server.py "$CONTAINER_ID:/workspace/00__server__.py"
+
+docker cp python/mjai/http_server/server.py ${CONTAINER_ID}:/workspace/00__server__.py
+
+```
+
 ```bash
 # pull latest docker image
 % docker pull docker.io/smly/mjai-client:v3
@@ -162,3 +177,5 @@ Confirmed working with rustc 1.70.0 (90c541806 2023-05-31).
 ## Special Thanks
 
 The code in `./src` directory is Mortal's libriichi with minor updates. Mortal is distributed under the AGPL-3.0 and is copyrighted by Equim.
+
+## mjai3p対応
